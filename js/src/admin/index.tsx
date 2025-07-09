@@ -5,6 +5,8 @@ import LinkButton from 'flarum/common/components/LinkButton';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import { extend } from 'flarum/common/extend';
 
+import User from 'flarum/common/models/User';
+
 import AdminNav from 'flarum/admin/components/AdminNav';
 
 
@@ -27,11 +29,13 @@ app.initializers.add('mcaxe-feedback', () => {
 });
 
 export default class FeedbackPage extends AdminPage {
+
   feedbacks: any[] = [];
   loading = true;
 
   pageOffset = 0;
   pageLimit = 20;
+
   headerInfo(): AdminHeaderAttrs {
     return {
       title: '用户反馈',
@@ -85,8 +89,9 @@ export default class FeedbackPage extends AdminPage {
         ) : (
           <div className="FeedbackPage-grid">
             {this.feedbacks.map((item: any) => {
+
               const user = item.relationships?.user?.data;
-              const userModel = app.store.getById('users', user?.id);
+              const userModel = app.store.getById('users', user?.id) as User | undefined;
 
               if (!userModel) return null;
 
