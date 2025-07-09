@@ -3,13 +3,8 @@ import { extend } from 'flarum/common/extend';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import Button from 'flarum/common/components/Button';
 
-
-
 import Modal from 'flarum/common/components/Modal';
 import Stream from 'flarum/common/utils/Stream';
-
-
-
 
 class FeedbackModal extends Modal {
   feedbackText: any;
@@ -22,7 +17,6 @@ class FeedbackModal extends Modal {
   }
 
   view() {
-
     return (
       <div className={`Modal ${this.className()}`} role="dialog" aria-modal="true">
         <div className="Modal-content">
@@ -50,7 +44,7 @@ class FeedbackModal extends Modal {
           className="FormControl"
           placeholder="请输入您的意见"
           value={this.feedbackText()}
-          oninput={(e: { target: { value: any; }; }) => this.feedbackText(e.target.value)}
+          oninput={(e: { target: { value: any } }) => this.feedbackText(e.target.value)}
           rows="20"
           cols="50"
           required
@@ -64,19 +58,10 @@ class FeedbackModal extends Modal {
   footer() {
     return (
       <div className="Modal-footer" style={{ display: 'flex', gap: '12px' }}>
-        <Button
-          className="Button Button--primary"
-          style={{ flex: 1 }}
-          loading={this.loading}
-          onclick={() => this.submit()}
-        >
+        <Button className="Button Button--primary" style={{ flex: 1 }} loading={this.loading} onclick={() => this.submit()}>
           提交
         </Button>
-        <Button
-          className="Button"
-          style={{ flex: 1 }}
-          onclick={() => this.hide()}
-        >
+        <Button className="Button" style={{ flex: 1 }} onclick={() => this.hide()}>
           取消
         </Button>
       </div>

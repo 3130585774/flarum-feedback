@@ -9,18 +9,15 @@ import User from 'flarum/common/models/User';
 
 import AdminNav from 'flarum/admin/components/AdminNav';
 
-
-
-
 app.initializers.add('mcaxe-feedback', () => {
   extend(AdminNav.prototype, 'items', function (items) {
-    items.add('feedback-link',
+    items.add(
+      'feedback-link',
       <LinkButton icon="fas fa-comment-dots" href="/mcaxe-feedback">
         意见反馈
       </LinkButton>
     );
   });
-
 
   app.routes['mcaxe-feedback'] = {
     path: '/mcaxe-feedback',
@@ -29,7 +26,6 @@ app.initializers.add('mcaxe-feedback', () => {
 });
 
 export default class FeedbackPage extends AdminPage {
-
   feedbacks: any[] = [];
   loading = true;
 
@@ -55,9 +51,7 @@ export default class FeedbackPage extends AdminPage {
     app
       .request({
         method: 'GET',
-        url:
-          app.forum.attribute('apiUrl') +
-          `/mcaxe-flarum-feedbacks-list?page[offset]=${this.pageOffset}&page[limit]=${this.pageLimit}`,
+        url: app.forum.attribute('apiUrl') + `/mcaxe-flarum-feedbacks-list?page[offset]=${this.pageOffset}&page[limit]=${this.pageLimit}`,
       })
       .then((result: any) => {
         app.store.pushPayload(result);
@@ -89,7 +83,6 @@ export default class FeedbackPage extends AdminPage {
         ) : (
           <div className="FeedbackPage-grid">
             {this.feedbacks.map((item: any) => {
-
               const user = item.relationships?.user?.data;
               const userModel = app.store.getById('users', user?.id) as User | undefined;
 
@@ -108,9 +101,7 @@ export default class FeedbackPage extends AdminPage {
                       >
                         {userModel.username()}
                       </a>
-                      <p className="FeedbackPage-timestamp">
-                        {new Date(item.attributes.createdAt).toLocaleString()}
-                      </p>
+                      <p className="FeedbackPage-timestamp">{new Date(item.attributes.createdAt).toLocaleString()}</p>
                     </div>
                   </div>
                   <p className="FeedbackPage-feedback">{item.attributes.feedback}</p>
@@ -125,7 +116,7 @@ export default class FeedbackPage extends AdminPage {
             <button className="Button" onclick={() => this.prevPage()} disabled={this.pageOffset === 0}>
               上一页
             </button>
-            <button className="Button" onclick={() => this.nextPage()} >
+            <button className="Button" onclick={() => this.nextPage()}>
               下一页
             </button>
           </div>
